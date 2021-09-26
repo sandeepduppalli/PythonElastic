@@ -10,17 +10,17 @@ api = Api(app)
 
 class Index(Resource):
     def get(self):
-        query = es.search(index='ama_index', body={'query':{'match':{'Name': 'Sandeep'}}})
+        query = es.search(index='my_index', body={'query':{'match':{'Name': 'Sandeep'}}})
         return jsonify(query)
 
-class ama_index(Resource):
+class my_index(Resource):
     def post(self, index):
         dslQuery = request.json
         query = es.search(index=index, body=dslQuery)
         return jsonify(query)
 
 api.add_resource(Index, '/index')
-api.add_resource(ama_index, '/indices/<string:index>')
+api.add_resource(my_index, '/indices/<string:index>')
 
 if __name__ == '__main__':
     app.run(host= '127.0.0.1', debug=True, port=8000)
